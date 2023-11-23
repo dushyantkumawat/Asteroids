@@ -1,0 +1,146 @@
+{
+    "name": "PlayerControls",
+    "maps": [
+        {
+            "name": "Movement",
+            "id": "e9bb651b-80ca-4fbf-88a0-5b671e09dd29",
+            "actions": [
+                {
+                    "name": "Rotate",
+                    "type": "Value",
+                    "id": "0e877acd-6340-4ee6-b14f-8717d99a40f8",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Thrust",
+                    "type": "Value",
+                    "id": "e26fc012-f362-4f02-969b-bd8591d44914",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Fire",
+                    "type": "Button",
+                    "id": "982cc02c-cb80-4b96-af6b-480f7ae8858f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "1D Axis - Arrow",
+                    "id": "64b41642-b973-461c-aeef-aca22ec91a2c",
+                    "path": "1DAxis",
+                    "interactions": "Hold(duration=0.1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "positive",
+                    "id": "bf83aeda-45b0-40ea-8ba4-eee2da388b3e",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Default",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
+                    "id": "f2ecd7e5-4ed2-42c8-8861-74124ca9c3d7",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Default",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "1D Axis - A/D",
+                    "id": "f29adada-4e46-4ca8-995a-01b931238e90",
+                    "path": "1DAxis",
+                    "interactions": "Hold(duration=0.1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "positive",
+                    "id": "a5efd329-434f-4a10-98fe-3fe00104ac93",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Default",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
+                    "id": "44ef6792-207d-4463-a7ff-c4ec7dc23dc3",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Default",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "92354d50-57ba-4c4a-bcee-1d315e6b35d2",
+                    "path": "<Keyboard>/w",
+                    "interactions": "Hold(duration=0.1)",
+                    "processors": "",
+                    "groups": "Default",
+                    "action": "Thrust",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "78b16f79-3f15-4242-b7d1-42ad66b7136f",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "Hold(duration=0.1)",
+                    "processors": "",
+                    "groups": "Default",
+                    "action": "Thrust",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fa795be3-d437-4508-aa31-4b9a56e25dff",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Default",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Default",
+            "bindingGroup": "Default",
+            "devices": []
+        }
+    ]
+}
