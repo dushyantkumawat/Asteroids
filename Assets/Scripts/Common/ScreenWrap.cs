@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace Asteroids
 {
     public class ScreenWrap : MonoBehaviour
     {
         #region Variables
+        [Inject]
+        private BoundsProvider bounds;
         private Camera mainCamera;
-        private Vector2 worldBounds;
         #endregion
 
         #region MonoBehaviour
@@ -17,24 +19,15 @@ namespace Asteroids
             mainCamera = Camera.main;
         }
 
-        private void Start()
-        {
-            CalucalateWorldBounds();
-        }
-
         private void Update()
         {
             CheckWrapPosition();
         }
         #endregion
 
-        private void CalucalateWorldBounds()
-        {
-            worldBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, mainCamera.transform.position.z));
-        }
-
         private void CheckWrapPosition()
         {
+            Vector2 worldBounds = bounds.WorldBounds;
             Vector3 pos = transform.position;
             if(pos.x < -worldBounds.x)
             {
