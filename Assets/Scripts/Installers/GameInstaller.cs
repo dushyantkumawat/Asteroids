@@ -7,6 +7,7 @@ public class GameInstaller : MonoInstaller
     [SerializeField] private GameSettingsSO GameSettings;
     [SerializeField] private PlayerShipDataSO ShipData;
     [SerializeField] private AsteroidDataSO AsteroidData;
+    [SerializeField] private PlayerController PlayerController;
     [SerializeField] private Asteroid AsteroidPrefab;
     [SerializeField] private AsteroidInitializer AsteroidInitializer;
     [SerializeField] private AsteroidManager AsteroidManager;
@@ -17,6 +18,7 @@ public class GameInstaller : MonoInstaller
         Container.BindInstance(GameSettings).AsSingle();
         Container.BindInstance(ShipData).AsSingle();
         Container.BindInstance(AsteroidData).AsSingle();
+        Container.BindInstance(PlayerController).AsSingle();
         Container.BindInstance(AsteroidInitializer).AsSingle();
         Container.BindInstance(AsteroidManager).AsSingle();
         Container.BindInstance(new BoundsProvider()).AsSingle();

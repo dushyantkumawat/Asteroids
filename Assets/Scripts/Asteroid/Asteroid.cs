@@ -31,12 +31,12 @@ namespace Asteroids
             if (target != null)
             {
                 target.OnHit();
+                OnHit();
             }
         }
 
         public void OnHit()
         {
-            Debug.Log("OnHit");
             OnAsteroidDestroyed?.Invoke(this, asteroidType, transform.position);
             pool.Despawn(this);
         }

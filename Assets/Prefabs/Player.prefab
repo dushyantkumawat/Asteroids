@@ -155,6 +155,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d88b4fbd5982ae7498d49c55c9c43603, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  visuals: {fileID: 5897134483261036209}
+  firePoint: {fileID: 8113917565213453885}
 --- !u!114 &8601616937217687608
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -17,5 +17,5 @@ MonoBehaviour:
   fireSpeed: 5
   bulletSpeed: 20
   bulletLifetime: 1.75
-  maxVelocity: 5
+  maxVelocity: 10
   maxLives: 5
