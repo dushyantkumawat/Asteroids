@@ -7,8 +7,8 @@ namespace Asteroids
 {
     public class GameManager : MonoBehaviour
     {
-        private Asteroid.Factory asteroidFactory;
         private AsteroidManager asteroidManager;
+        private GameSettingsSO gameSettings;
 
         private int currentAsteroids = 0;
         private int initialAsteroids = 4;
@@ -16,10 +16,10 @@ namespace Asteroids
         private float respawnDelay = 2f;
 
         [Inject]
-        public void Construct(Asteroid.Factory asteroidFactory, AsteroidManager asteroidManager)
+        public void Construct(AsteroidManager asteroidManager, GameSettingsSO gameSettings)
         {
-            this.asteroidFactory = asteroidFactory;
             this.asteroidManager = asteroidManager;
+            this.gameSettings = gameSettings;
         }
 
         void Start()
@@ -29,12 +29,14 @@ namespace Asteroids
 
         private void StartGame()
         {
-            currentAsteroids = initialAsteroids;
-            CallNextWave();
+            currentAsteroids = gameSettings.initialAsteroids;
+            asteroidManager.SpawnAsteroids(currentAsteroids);
+            asteroidManager.WaveComplete += CallNextWave;
         }
 
         private void CallNextWave()
         {
+            currentAsteroids += gameSettings.asteroidCountIncrease;
             asteroidManager.SpawnAsteroids(currentAsteroids);
         }
     }

@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Asteroids
 {
-    public class AsteroidPool : MonoPoolableMemoryPool<EAsteroidType, IMemoryPool, Asteroid>
+    public class BulletPool : MonoPoolableMemoryPool<float, Vector2, Vector2, IMemoryPool, Bullet>
     {
     }
 }

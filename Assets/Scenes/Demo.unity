@@ -245,6 +245,11 @@ Transform:
   - {fileID: 1852280462}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &231335506 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8113917565213453885, guid: 5377ea2bb0d2c4e4bbc4e7964581922f, type: 3}
+  m_PrefabInstance: {fileID: 1225299127839107784}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &298530985
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,69 +419,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce6a50a5b544fc14bb0905a3b7fdcddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1360437153
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1360437154}
-  m_Layer: 0
-  m_Name: Factories
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1360437154
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1360437153}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1769879715}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1769879714
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1769879715}
-  m_Layer: 0
-  m_Name: AsteroidFactory
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1769879715
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1769879714}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1360437154}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1852280460
 GameObject:
   m_ObjectHideFlags: 0
@@ -506,11 +448,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34ae443af750aaa4da856caae9e26e26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameSettings: {fileID: 11400000, guid: 65f7ccf5e94f141478032dfe54ec5dfc, type: 2}
   ShipData: {fileID: 11400000, guid: 211f950ee324b0e4aa86f43b92f6b5f7, type: 2}
   AsteroidData: {fileID: 11400000, guid: 73b150c64a708e94a907b931b8d80564, type: 2}
   AsteroidPrefab: {fileID: 382080331464422328, guid: cc9c296b1c545324389cf65022686ebc, type: 3}
   AsteroidInitializer: {fileID: 114644632}
   AsteroidManager: {fileID: 114644633}
+  PlayerBulletPrefab: {fileID: -4162307340637179069, guid: a002b28815d29094eace86594ce9d7a4, type: 3}
 --- !u!4 &1852280462
 Transform:
   m_ObjectHideFlags: 0
@@ -672,6 +616,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4452656866539379281, guid: 5377ea2bb0d2c4e4bbc4e7964581922f, type: 3}
+      propertyPath: firePoint
+      value: 
+      objectReference: {fileID: 231335506}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -686,4 +634,3 @@ SceneRoots:
   - {fileID: 1225299127839107784}
   - {fileID: 114939064}
   - {fileID: 298530986}
-  - {fileID: 1360437154}

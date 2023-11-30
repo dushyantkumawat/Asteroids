@@ -10,6 +10,8 @@ namespace Asteroids
         public float rotationSensitivity = 2f;
         public float thrustForce = 10f;
         public float fireSpeed = 1f;
+        public float bulletSpeed = 20f;
+        public float bulletLifetime = 2.5f;
         public float maxVelocity = 5f;
         public int maxLives = 5;
     }

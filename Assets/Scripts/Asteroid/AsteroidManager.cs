@@ -1,15 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
-using Zenject.Asteroids;
+using Random = UnityEngine.Random;
 
 namespace Asteroids
 {
     public class AsteroidManager : MonoBehaviour
     {
+        public Action WaveComplete;
+
         private Asteroid.Factory asteroidFactory;
         private BoundsProvider boundsProvider;
+
+        private int activeAsteroids;
 
         [Inject]
         public void Construct(Asteroid.Factory asteroidFactory, BoundsProvider boundsProvider)
@@ -28,9 +33,15 @@ namespace Asteroids
 
         private void SpawnAsteroid()
         {
-            Asteroid asteroid = asteroidFactory.Create(EAsteroidType.Large);
-            asteroid.transform.position = GetRandomPosition();
+            SpawnAsteroid(EAsteroidType.Large, GetRandomPosition());
+        }
+
+        private void SpawnAsteroid(EAsteroidType type, Vector2 position)
+        {
+            Asteroid asteroid = asteroidFactory.Create(type);
+            asteroid.transform.position = position;
             asteroid.OnAsteroidDestroyed += HandleAsteroidDestroyed;
+            activeAsteroids++;
         }
 
         private void HandleAsteroidDestroyed(Asteroid asteroid, EAsteroidType asteroidType, Vector3 position)
@@ -39,6 +50,11 @@ namespace Asteroids
             if (asteroidType != EAsteroidType.Small)
             {
                 SpawnSmallerAsteroids(asteroidType, position);
+            }
+            activeAsteroids--;
+            if (activeAsteroids == 0)
+            {
+                WaveComplete?.Invoke();
             }
         }
 
@@ -58,12 +74,8 @@ namespace Asteroids
         private void SpawnSplitAsteroids(EAsteroidType type, Vector3 position)
         {
             Vector3 random = Random.insideUnitSphere;
-
-            var asteroid = asteroidFactory.Create(type);
-            asteroid.transform.position = position + random;
-
-            asteroid = asteroidFactory.Create(type);
-            asteroid.transform.position = position - random;
+            SpawnAsteroid(type, position + random);
+            SpawnAsteroid(type, position - random);
         }
 
         private Vector2 GetRandomPosition()

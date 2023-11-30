@@ -7,17 +7,27 @@ using Zenject;
 namespace Asteroids
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IHitTarget
     {
         #region Variables
+        [SerializeField]
+        private Transform firePoint;
+
+        [Inject]
+        private Bullet.Factory bulletFactory;
         [Inject]
         private PlayerShipDataSO shipData;
+
         private PlayerControls controls;
         private Rigidbody2D m_Rigidbody2d;
 
         private InputAction thrustAction;
         private InputAction rotateAction;
         private InputAction fireAction;
+
+        private bool movementActive;
+        private float timeDiffBetweenShots;
+        private float lastFireTime;
         #endregion
 
         #region Monobehavior
@@ -28,6 +38,8 @@ namespace Asteroids
             thrustAction = controls.Movement.Thrust;
             rotateAction = controls.Movement.Rotate;
             fireAction = controls.Movement.Fire;
+            timeDiffBetweenShots = 1f / shipData.fireSpeed;
+            movementActive = true;
         }
 
         private void OnEnable()
@@ -42,16 +54,23 @@ namespace Asteroids
 
         private void FixedUpdate()
         {
+            if (!movementActive) return;
+
             if(rotateAction.IsPressed())
             {
                 float dir = rotateAction.ReadValue<float>();
                 Rotate(dir);
             }
 
-            if (thrustAction.IsPressed())
+            if (thrustAction.phase == InputActionPhase.Started)
             {
                 Thrust();
                 LimitVelocity();
+            }
+
+            if(fireAction.IsPressed())
+            {
+                Fire();
             }
 
         }
@@ -68,11 +87,6 @@ namespace Asteroids
             m_Rigidbody2d.AddForce(shipData.thrustForce * Time.fixedDeltaTime * transform.up);
         }
 
-        private void Fire()
-        {
-            // TODO
-        }
-
         private void LimitVelocity()
         {
             if (m_Rigidbody2d.velocity.magnitude > shipData.maxVelocity)
@@ -81,6 +95,27 @@ namespace Asteroids
             }
         }
         #endregion
+
+        #region Firing
+        private void Fire()
+        {
+            if (!CanFire()) return;
+            bulletFactory.Create(shipData.bulletLifetime, firePoint.position, transform.up * shipData.bulletSpeed);
+            lastFireTime = Time.time;
+        }
+
+        private bool CanFire()
+        {
+            if (lastFireTime + timeDiffBetweenShots > Time.time)
+                return false;
+            return true;
+        }
+        #endregion
+
+        public void OnHit()
+        {
+            // TODO
+        }
 
     }
 }

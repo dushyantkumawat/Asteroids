@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Asteroids
 {
-    public class Asteroid : MonoBehaviour, IPoolable<EAsteroidType, IMemoryPool>, IDisposable
+    public class Asteroid : MonoBehaviour, IPoolable<EAsteroidType, IMemoryPool>, IHitTarget
     {
         #region Variables
         public event Action<Asteroid, EAsteroidType, Vector3> OnAsteroidDestroyed;
@@ -25,23 +25,30 @@ namespace Asteroids
             }
         }
 
-        private void OnDestroy()
+        public void OnCollisionEnter2D(Collision2D collision)
         {
+            IHitTarget target = collision.collider.GetComponentInParent<IHitTarget>();
+            if (target != null)
+            {
+                target.OnHit();
+            }
+        }
+
+        public void OnHit()
+        {
+            Debug.Log("OnHit");
             OnAsteroidDestroyed?.Invoke(this, asteroidType, transform.position);
+            pool.Despawn(this);
         }
 
         public void OnDespawned()
         {
-            pool.Despawn(this);
+            pool = null;
         }
 
         public void OnSpawned(EAsteroidType p1, IMemoryPool p2)
         {
             pool = p2;
-        }
-
-        public void Dispose()
-        {
         }
 
         [Serializable]
