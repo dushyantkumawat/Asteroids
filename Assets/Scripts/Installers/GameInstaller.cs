@@ -11,6 +11,9 @@ public class GameInstaller : MonoInstaller
     [SerializeField] private Asteroid AsteroidPrefab;
     [SerializeField] private AsteroidInitializer AsteroidInitializer;
     [SerializeField] private AsteroidManager AsteroidManager;
+    [SerializeField] private GameManager GameManager;
+    [SerializeField] private ScoreManager ScoreManager;
+    [SerializeField] private UIManager UIManager;
     [SerializeField] private Bullet PlayerBulletPrefab;
 
     public override void InstallBindings()
@@ -21,6 +24,9 @@ public class GameInstaller : MonoInstaller
         Container.BindInstance(PlayerController).AsSingle();
         Container.BindInstance(AsteroidInitializer).AsSingle();
         Container.BindInstance(AsteroidManager).AsSingle();
+        Container.BindInstance(GameManager).AsSingle();
+        Container.BindInstance(ScoreManager).AsSingle();
+        Container.BindInstance(UIManager).AsSingle();
         Container.BindInstance(new BoundsProvider()).AsSingle();
 
         Container.BindFactory<EAsteroidType, Asteroid, Asteroid.Factory>()

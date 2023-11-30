@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,25 +8,41 @@ namespace Asteroids
 {
     public class GameManager : MonoBehaviour
     {
+        #region Variables
+        public event Action<int> OnLivesChanged;
+        public event Action OnGameOver;
+
         private AsteroidManager asteroidManager;
         private GameSettingsSO gameSettings;
         private PlayerController playerController;
+        private UIManager uiManager;
 
         private int currentAsteroids = 0;
         private int playerLives;
+        #endregion
 
         [Inject]
-        public void Construct(AsteroidManager asteroidManager, GameSettingsSO gameSettings, PlayerController playerController)
+        public void Construct(AsteroidManager asteroidManager, GameSettingsSO gameSettings, PlayerController playerController, UIManager uiManager)
         {
             this.asteroidManager = asteroidManager;
             this.gameSettings = gameSettings;
             this.playerController = playerController;
+            this.uiManager = uiManager;
         }
 
-        void Start()
+        #region Monobehaviour
+        private void Awake()
         {
-            StartGame();
+            uiManager.OnStartGame += StartGame;
+            uiManager.OnRestartGame += StartGame;
         }
+
+        private void OnDestroy()
+        {
+            uiManager.OnStartGame -= StartGame;
+            uiManager.OnRestartGame -= StartGame;
+        }
+        #endregion
 
         private void StartGame()
         {
@@ -41,12 +58,14 @@ namespace Asteroids
         {
             asteroidManager.WaveComplete -= CallNextWave;
             playerController.PlayerHit -= OnPlayerHit;
+            OnGameOver?.Invoke();
         }
 
         private void OnPlayerHit()
         {
             playerLives--;
-            if(playerLives == 0)
+            OnLivesChanged?.Invoke(playerLives);
+            if (playerLives == 0)
             {
                 GameOver();
             }
