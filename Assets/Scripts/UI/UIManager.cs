@@ -73,7 +73,7 @@ namespace Asteroids
         }
         private void SetScore(int lives)
         {
-            livesText.SetText(lives.ToString());
+            scoreText.SetText(lives.ToString());
         }
 
         private void ActivateGameUI()
@@ -81,13 +81,25 @@ namespace Asteroids
             ResetUIState();
             OnStartGame?.Invoke();
             gamePlayScreen.SetActive(true);
+            Cursor.visible = false;
         }
 
         private void ActivateGameOverUI()
         {
+            /// Most of the times, the player will be firing wildly using Spacebar.
+            /// Disabling restartButton for a second so the player does not 
+            /// accidentally press the restart button.
+            restartButton.interactable = false;
+            Invoke(nameof(EnableRestartButton), 1f);
             gamePlayScreen.SetActive(false);
             gameOverScreen.SetActive(true);
             finalScoreText.SetText(scoreText.text);
+            Cursor.visible = true;
+        }
+
+        private void EnableRestartButton()
+        {
+            restartButton.interactable = true;
         }
 
         private void ResetUIState()

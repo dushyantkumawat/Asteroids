@@ -11,15 +11,19 @@ namespace Asteroids
         #region Variables
         public event Action<Asteroid, EAsteroidType, Vector3> OnAsteroidDestroyed;
 
+        public int Score => score;
+
         [SerializeField] private List<AsteroidBody> bodyList;
         private EAsteroidType asteroidType;
         private IMemoryPool pool;
+        private int score;
         #endregion
 
-        public void Init(EAsteroidType asteroidType)
+        public void Init(EAsteroidType asteroidType, int score)
         {
             this.asteroidType = asteroidType;
-            foreach(AsteroidBody body in bodyList)
+            this.score = score;
+            foreach (AsteroidBody body in bodyList)
             {
                 body.gameObject.SetActive(asteroidType == body.asteroidType);
             }
@@ -30,8 +34,8 @@ namespace Asteroids
             IHitTarget target = collision.collider.GetComponentInParent<IHitTarget>();
             if (target != null)
             {
-                target.OnHit();
                 OnHit();
+                target.OnHit();
             }
         }
 
@@ -43,12 +47,16 @@ namespace Asteroids
 
         public void OnDespawned()
         {
-            pool = null;
         }
 
         public void OnSpawned(EAsteroidType p1, IMemoryPool p2)
         {
             pool = p2;
+        }
+
+        public void Despawn()
+        {
+            pool.Despawn(this);
         }
 
         [Serializable]

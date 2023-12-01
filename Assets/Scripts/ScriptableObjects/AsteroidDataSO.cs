@@ -29,5 +29,6 @@ namespace Asteroids
     {
         public EAsteroidType asteroidType;
         public float velocity;
+        public int score;
     }
 }

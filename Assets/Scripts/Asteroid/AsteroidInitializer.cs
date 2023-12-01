@@ -13,10 +13,8 @@ namespace Asteroids
 
         public void InitializeAsteroid(Asteroid asteroid, EAsteroidType type)
         {
-            asteroid.Init(type);
-
             AsteroidData asteroidData = asteroidDataContainer.GetDataForType(type);
-
+            asteroid.Init(type, asteroidData.score);
             var movementScript = asteroid.GetComponent<AsteroidMovement>();
             if (movementScript != null)
             {

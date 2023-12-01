@@ -3,24 +3,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
+using Zenject.Asteroids;
 using Random = UnityEngine.Random;
 
 namespace Asteroids
 {
     public class AsteroidManager : MonoBehaviour
     {
-        public Action WaveComplete;
+        public event Action OnWaveComplete;
+        public event Action<int> OnAsteroidDestroyed;
 
         private Asteroid.Factory asteroidFactory;
         private BoundsProvider boundsProvider;
-
-        private int activeAsteroids;
+        private GameManager gameManager;
+        private List<Asteroid> activeAsteroids = new List<Asteroid>();
 
         [Inject]
-        public void Construct(Asteroid.Factory asteroidFactory, BoundsProvider boundsProvider)
+        public void Construct(Asteroid.Factory asteroidFactory, BoundsProvider boundsProvider, GameManager gameManager)
         {
             this.asteroidFactory = asteroidFactory;
             this.boundsProvider = boundsProvider;
+            this.gameManager = gameManager;
+        }
+
+        private void Awake()
+        {
+            gameManager.OnGameOver += ResetAsteroids;
+        }
+
+        private void OnDestroy()
+        {
+            gameManager.OnGameOver -= ResetAsteroids;
         }
 
         public void SpawnAsteroids(int count)
@@ -41,20 +54,21 @@ namespace Asteroids
             Asteroid asteroid = asteroidFactory.Create(type);
             asteroid.transform.position = position;
             asteroid.OnAsteroidDestroyed += HandleAsteroidDestroyed;
-            activeAsteroids++;
+            activeAsteroids.Add(asteroid);
         }
 
         private void HandleAsteroidDestroyed(Asteroid asteroid, EAsteroidType asteroidType, Vector3 position)
         {
             asteroid.OnAsteroidDestroyed -= HandleAsteroidDestroyed;
+            OnAsteroidDestroyed?.Invoke(asteroid.Score);
             if (asteroidType != EAsteroidType.Small)
             {
                 SpawnSmallerAsteroids(asteroidType, position);
             }
-            activeAsteroids--;
-            if (activeAsteroids == 0)
+            activeAsteroids.Remove(asteroid);
+            if (activeAsteroids.Count == 0)
             {
-                WaveComplete?.Invoke();
+                OnWaveComplete?.Invoke();
             }
         }
 
@@ -76,6 +90,16 @@ namespace Asteroids
             Vector3 random = Random.insideUnitSphere;
             SpawnAsteroid(type, position + random);
             SpawnAsteroid(type, position - random);
+        }
+
+        private void ResetAsteroids()
+        {
+            for(int i=0; i< activeAsteroids.Count; i++)
+            {
+                activeAsteroids[i].OnAsteroidDestroyed -= HandleAsteroidDestroyed;
+                activeAsteroids[i].Despawn();
+            }
+            activeAsteroids.Clear();
         }
 
         private Vector2 GetRandomPosition()

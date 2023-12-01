@@ -15,7 +15,10 @@ MonoBehaviour:
   data:
   - asteroidType: 2
     velocity: 6
+    score: 100
   - asteroidType: 1
     velocity: 4
+    score: 50
   - asteroidType: 0
     velocity: 2
+    score: 20

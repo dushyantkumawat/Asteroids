@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e2cd7b1ab113da419024a697fb5626d, type: 3}
   m_Name: PlayerShipData
   m_EditorClassIdentifier: 
-  rotationSensitivity: 200
-  thrustForce: 5000
+  rotationSensitivity: 300
+  thrustForce: 2500
   fireSpeed: 5
   bulletSpeed: 20
   bulletLifetime: 1.75
